@@ -8,32 +8,28 @@
       </a>
     </li><!-- End Dashboard Nav -->
 
-    @can('ver-ventas')
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
           <i class="fa-solid fa-cart-shopping"></i><span>Ventas</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route("ventas-nueva")}}">
+            <a href="">
               <i class="bi bi-circle"></i><span>Vender Producto</span>
             </a>
           </li>
           <li>
-            <a href="{{ route("detalle-venta")}}">
+            <a href="">
               <i class="bi bi-circle"></i><span>Consultar Venta</span>
             </a>
           </li>
         </ul>
       </li><!-- End Components Nav -->
-    @endcan
-      
-    @can('ver-admin')
       
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route("categorias") }}">
+        <a class="nav-link collapsed" href="">
           <i class="fa-solid fa-list"></i>
           <span>Categorías</span>
         </a>
@@ -45,12 +41,12 @@
         </a>
         <ul id="productos-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route("productos")}}">
+            <a href="">
               <i class="bi bi-circle"></i><span>Administrar Productos</span>
             </a>
           </li>
           <li>
-            <a href="{{ route("reportes_productos") }}">
+            <a href="">
               <i class="bi bi-circle"></i><span>Reportes de Productos</span>
             </a>
           </li>
@@ -58,27 +54,24 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route("compras") }}">
+        <a class="nav-link collapsed" href="">
           <i class="fa-solid fa-shop"></i>
           <span>Compras</span>
         </a>
       </li><!-- End Error 404 Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route("proveedores") }}">
+        <a class="nav-link collapsed" href="">
          <i class="fa-solid fa-truck"></i>
           <span>Proveedores</span>
         </a>
       </li><!-- End Error 404 Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{{ route("usuarios") }}">
+        <a class="nav-link collapsed" href="">
           <i class="fa-solid fa-users"></i>
           <span>Usuarios</span>
         </a>
       </li><!-- End Blank Page Nav -->
-    @endcan
-
-
   </ul>
 </aside>
