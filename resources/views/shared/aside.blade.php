@@ -9,34 +9,6 @@
     </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
-          <i class="fa-solid fa-cart-shopping"></i><span>Ventas</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="">
-              <i class="bi bi-circle"></i><span>Vender Producto</span>
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="bi bi-circle"></i><span>Consultar Venta</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-      
-      
-      <li class="nav-heading">Pages</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="fa-solid fa-list"></i>
-          <span>Categorías</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#productos-nav" data-bs-toggle="collapse">
           <i class="bi bi-menu-button-wide"></i><span>Productos</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -48,6 +20,11 @@
           </li>
           <li>
             <a href="">
+              <i class="bi bi-circle"></i><span>Productos Registrados</span>
+            </a>
+          </li>
+          <li>
+            <a href="">
               <i class="bi bi-circle"></i><span>Reportes de Productos</span>
             </a>
           </li>
@@ -55,11 +32,34 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="">
-          <i class="fa-solid fa-shop"></i>
-          <span>Compras</span>
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse">
+          <i class="fa-solid fa-cart-shopping"></i><span>Ventas</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li><!-- End Error 404 Page Nav -->
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          
+          <li>
+            <a href="">
+              <i class="bi bi-circle"></i><span>Consultar Ventas</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="">
+              <i class="bi bi-circle"></i><span>Carrito</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Components Nav -->
+      
+      
+      <hr>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="">
+          <i class="fa-solid fa-list"></i>
+          <span>Categorías</span>
+        </a>
+      </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="">
