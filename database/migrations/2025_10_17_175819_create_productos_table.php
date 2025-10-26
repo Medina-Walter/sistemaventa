@@ -9,6 +9,26 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    public function up()
+    {
+    Schema::create('productos', function (Blueprint $table) {
+        $table->id();
+        $table->string('nombre');
+        $table->decimal('precio', 8, 2);
+        $table->integer('stock');
+
+        // Si el producto tiene imagen opcional:
+        $table->unsignedBigInteger('id_imagen')->nullable();
+
+        $table->foreign('id_imagen')
+              ->references('id')
+              ->on('imagenes')
+              ->onDelete('set null');
+
+        $table->timestamps();
+    });
+}
+
     public function up(): void
     {
         Schema::create('productos', function (Blueprint $table) {

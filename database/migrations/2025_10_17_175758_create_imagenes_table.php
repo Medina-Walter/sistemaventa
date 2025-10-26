@@ -10,6 +10,10 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
+    {
+        Schema::create('imagenes', function (Blueprint $table) {
+            $table->id(); // <--- tipo BIGINT UNSIGNED automáticamente
+
     {   
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id('id_imagen');
@@ -18,7 +22,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
