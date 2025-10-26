@@ -18,6 +18,11 @@ return new class extends Migration
             $table->string('usuario')->unique();
             $table->string('correo')->unique();
             $table->string('password');
+            $table->id('id_usuario');
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->string('usuario')->unique();
+            $table->string('clave');
             $table->string('rol');
             $table->timestamps();
         });

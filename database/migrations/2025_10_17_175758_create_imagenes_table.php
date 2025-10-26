@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id(); // <--- tipo BIGINT UNSIGNED automáticamente
+
+    {   
+        Schema::create('imagenes', function (Blueprint $table) {
+            $table->id('id_imagen');
+            $table->string('nombre');
             $table->string('ruta');
             $table->timestamps();
         });
     }
-
-
     /**
      * Reverse the migrations.
      */
