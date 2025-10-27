@@ -9,39 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-    {
-    Schema::create('productos', function (Blueprint $table) {
-        $table->id();
-        $table->string('nombre');
-        $table->decimal('precio', 8, 2);
-        $table->integer('stock');
-
-        // Si el producto tiene imagen opcional:
-        $table->unsignedBigInteger('id_imagen')->nullable();
-
-        $table->foreign('id_imagen')
-              ->references('id')
-              ->on('imagenes')
-              ->onDelete('set null');
-
-        $table->timestamps();
-    });
-}
-
     public function up(): void
     {
         Schema::create('productos', function (Blueprint $table) {
-            $table->id('id_producto');
+            $table->id(); // Crea id como BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY
             $table->string('nombre');
-            $table->string('codigo')->unique();
-            $table->foreignId('id_imagen')->nullable()->constrained('imagenes')->onDelete('set null');
-            $table->text('descripcion')->nullable();
-            $table->integer('stock')->default(0);
+            $table->string('codigo')->unique(); // 🔹 Evita duplicados
+            $table->unsignedBigInteger('id_imagen')->nullable();
+            $table->string('descripcion');
+            $table->integer('stock');
             $table->decimal('precio_compra', 10, 2);
             $table->decimal('precio_venta', 10, 2);
-            $table->foreignId('id_categoria')->constrained('categorias')->onDelete('cascade');
-            $table->foreignId('id_proveedor')->nullable()->constrained('proveedores')->onDelete('set null');
+            $table->unsignedBigInteger('id_categoria')->nullable();
+            $table->unsignedBigInteger('id_proveedor')->nullable();
+
+            // 🔹 Relaciones foráneas
+            $table->foreign('id_imagen')->references('id')->on('imagenes')->onDelete('set null');
+            $table->foreign('id_categoria')->references('id')->on('categorias')->onDelete('set null');
+            $table->foreign('id_proveedor')->references('id')->on('proveedores')->onDelete('set null');
             $table->timestamps();
         });
     }
