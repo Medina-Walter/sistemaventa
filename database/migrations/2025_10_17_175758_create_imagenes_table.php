@@ -10,10 +10,10 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-    {   
+
+    {
         Schema::create('imagenes', function (Blueprint $table) {
-            $table->id('id_imagen');
-            $table->string('nombre');
+            $table->id();
             $table->string('ruta');
             $table->timestamps();
         });
