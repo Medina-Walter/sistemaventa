@@ -9,12 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void // Se agrega ': void' para mejor tipado
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->id();
-            $table->id('id_categoria');
-            $table->string('nombre');
+            
+            // CORRECCIÓN: Se elimina $table->id() duplicado.
+            // Se mantiene una única clave primaria auto-incrementable con el nombre 'id_categoria'.
+            $table->id('id_categoria'); 
+            
+            $table->string('nombre', 100)->unique(); // Es buena práctica definir el tamaño y que sea única.
+            
             $table->timestamps();
         });
     }
