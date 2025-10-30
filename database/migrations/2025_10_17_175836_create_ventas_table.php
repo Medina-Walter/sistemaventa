@@ -15,7 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
             $table->decimal('total_venta', 10, 2);
+            
             $table->timestamps();
+            
+            // 2. Definición de la clave foránea (ajustada a tus nombres de columnas)
+            // Esto asume que la clave primaria en la tabla 'usuarios' se llama 'id_usuario'.
+            $table->foreign('id_usuario')
+                  ->references('id_usuario') 
+                  ->on('usuarios')
+                  ->onDelete('restrict'); // Mejor usar 'restrict' o 'set null' en ventas que 'cascade'
         });
     }
 

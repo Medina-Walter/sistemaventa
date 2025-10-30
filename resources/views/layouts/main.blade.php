@@ -18,56 +18,71 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="{{ asset('NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{ asset('NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
-  <link href="{{ asset('NiceAdmin/assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
-  <link href="{{ asset('NiceAdmin/assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
-  <link href="{{ asset('NiceAdmin/assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
-  <link href="{{ asset('NiceAdmin/assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
 
-
+  <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.4/css/buttons.dataTables.css">
 
   <!-- Template Main CSS File -->
-  <link href="{{ asset('NiceAdmin/assets/css/style.css')}}" rel="stylesheet">
+  <link href="{{ asset('NiceAdmin/assets/css/style.css') }}" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
+  <!-- Custom Pagination Styles -->
+  <style>
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+      background-color: white;
+      color: #212529;
+      border: 1px solid #dee2e6;
+      margin: 0 2px;
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+      background-color: #0d6efd;
+      color: white !important;
+      font-weight: bold;
+      border: 1px solid #0d6efd;
+    }
+  </style>
 </head>
 
 <body>
 
   <!-- ======= Header ======= -->
   @include('shared.header')
-  <!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
   @include('shared.aside')
-  <!-- End Sidebar-->
 
   @yield('contenido')
 
   <!-- ======= Footer ======= -->
   @include('shared.footer')
-  <!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
 
   <!-- Vendor JS Files -->
-  <script src="{{ asset('NiceAdmin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/chart.js/chart.umd.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/echarts/echarts.min.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/quill/quill.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{ asset('NiceAdmin/assets/vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/quill/quill.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ asset('NiceAdmin/assets/vendor/php-email-form/validate.js') }}"></script>
 
-
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-  <!-- Datatable -->
-  <script src=""></script>
-  <script src=""></script>
+  <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.2.4/js/dataTables.buttons.js"></script>
   <script src="https://cdn.datatables.net/buttons/3.2.4/js/buttons.dataTables.js"></script>
@@ -78,41 +93,50 @@
   <script src="https://cdn.datatables.net/buttons/3.2.4/js/buttons.print.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="{{ asset('NiceAdmin/assets/js/main.js')}}"></script>
+  <script src="{{ asset('NiceAdmin/assets/js/main.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <!-- DataTable Config -->
   <script>
     new DataTable('.datatable', {
       ordering: false,
-        layout: {
-          topStart: {
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+      layout: {
+        topStart: {
+          buttons: [
+            {
+              extend: 'excel',
+              exportOptions: {
+                columns: [0, 1, 2, 3] // Exporta solo: nombre, apellido, usuario, rol
+              }
             }
-          },
-          language: {
-          url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+          ]
         }
-        });
+      },
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+      }
+    });
 
-      @if(session('success'))
+    @if(session('success'))
       Swal.fire({
-        title:'Exito!',
+        title: 'Éxito!',
         text: '{{ session('success') }}',
         icon: 'success',
         confirmButtonText: 'Aceptar'
       });
-      @endif
+    @endif
 
-      @if(session('error'))
+    @if(session('error'))
       Swal.fire({
-        title:'Error!',
+        title: 'Error!',
         text: '{{ session('error') }}',
         icon: 'error',
         confirmButtonText: 'Aceptar'
       });
-      @endif
-</script>
-@stack('scripts')
+    @endif
+  </script>
+
+  @stack('scripts')
 
 </body>
 </html>

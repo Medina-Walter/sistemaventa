@@ -9,15 +9,20 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void // Es buena práctica usar ': void' en Laravel 10+
     {
-        Schema::create('imagenes', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre');
-            $table->string('ruta');
+        Schema::create('imagenes', function (Blueprint $table) {      
+            // Opción 1: Usar el método 'id()' estándar para la clave primaria
+            $table->id(); 
+            
+            // Si quieres que la columna se llame 'id_imagen' puedes usar:
+            // $table->id('id_imagen'); 
+            
+            $table->string('nombre', 255);
+            $table->string('ruta', 255);
             $table->timestamps();
         });
-    }
+    } // <--- Este corchete cierra el método public function up()
 
     /**
      * Reverse the migrations.

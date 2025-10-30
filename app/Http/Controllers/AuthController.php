@@ -2,45 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
     public function login(Request $request)
     {
-        $credenciales = $request->validate([
-            'correo' => ['required', 'email'],
-            'password' => ['required']
+        $request->validate([
+            'usuario' => 'required|string',
+            'password' => 'required|string',
         ]);
 
-        $usuario = $this->userRepository->buscarUsuarioPorCorreo($credenciales['correo']);
+        $usuario = Usuario::where('usuario', $request->usuario)->first();
 
-        if (!$usuario) {
-            return back()->withErrors(['correo' => 'El usuario no existe']);
+        if ($usuario && Hash::check($request->password, $usuario->password)) {
+            Session::put('usuario_id', $usuario->id_usuario);
+            Session::put('usuario_nombre', $usuario->nombre);
+
+            return redirect('/home');
         }
 
-        if (Auth::attempt($credenciales)) {
-            $request->session()->regenerate();
-            return redirect()->intended('home');
-        }
-
-        return back()->withErrors(['password' => 'Credenciales Incorrectas']);
+        return back()->withErrors([
+            'usuario' => 'Credenciales incorrectas.',
+        ])->withInput();
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login');
+        $request->session()->flush();
+        return redirect()->route('login');
     }
 }

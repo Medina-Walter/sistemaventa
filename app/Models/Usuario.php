@@ -17,8 +17,9 @@ class Usuario extends Model
         'apellido',
         'usuario',
         'correo',
-        'clave',
+        'password',
         'rol',
+        'estado',
     ];
 
     public function ventas()
