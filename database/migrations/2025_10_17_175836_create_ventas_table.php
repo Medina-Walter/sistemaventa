@@ -12,14 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ventas', function (Blueprint $table) {
-            
-            // CORRECCIÓN: Usamos solo una clave primaria auto-incrementable.
-            // Se mantiene 'id_venta' como el nombre de la PK.
-            $table->id('id_venta'); 
-            
-            // 1. Definición de la columna para la clave foránea
-            $table->unsignedBigInteger('id_usuario');
-            
+            $table->id();
+            $table->foreignId('id_usuario')->constrained('usuarios')->onDelete('cascade');
             $table->decimal('total_venta', 10, 2);
             
             $table->timestamps();

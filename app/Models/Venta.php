@@ -10,13 +10,13 @@ class Venta extends Model
     use HasFactory;
 
     protected $table = 'ventas';
-    protected $primaryKey = 'id_venta';
 
     protected $fillable = [
         'id_usuario',
-        'total_venta',
+        'total_venta'
     ];
 
+    // Relación: una venta pertenece a un usuario
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');
@@ -27,3 +27,4 @@ class Venta extends Model
         return $this->hasMany(DetalleVenta::class, 'id_venta');
     }
 }
+

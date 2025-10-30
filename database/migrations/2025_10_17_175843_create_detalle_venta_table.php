@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalle_venta', function (Blueprint $table) {
-            
+        Schema::create('detalle_venta', function (Blueprint $table) {   
             // CORRECCIÓN 1: Eliminamos la clave primaria duplicada ($table->id()).
             // Mantenemos 'id_detalle' como la única clave primaria.
-            $table->id('id_detalle'); 
-            
+            $table->id(); 
             // 1. Definición de las columnas foráneas
             $table->unsignedBigInteger('id_venta');
             $table->unsignedBigInteger('id_producto');
-            
+            $table->foreignId('id_venta')->constrained('ventas')->onDelete('cascade');
+            $table->foreignId('id_producto')->constrained('productos')->onDelete('cascade');
             $table->integer('cantidad');
             $table->decimal('precio_unitario', 10, 2);
             $table->decimal('sub_total', 10, 2);

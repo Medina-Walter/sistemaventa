@@ -14,6 +14,10 @@ Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
         return view('modules.dashboard.home');
     });
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoriasController;
+
+
     // Panel de usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
     Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
@@ -40,5 +44,9 @@ Route::get('/login', function () {
 // Procesamiento del login
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-// Cierre de sesión
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::resource('productos', ProductosController::class);
+
+Route::resource('categorias', CategoriasController::class);
+

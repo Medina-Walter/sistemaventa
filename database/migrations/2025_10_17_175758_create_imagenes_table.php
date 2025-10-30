@@ -11,8 +11,7 @@ return new class extends Migration
      */
     public function up(): void // Es buena práctica usar ': void' en Laravel 10+
     {
-        Schema::create('imagenes', function (Blueprint $table) {
-            
+        Schema::create('imagenes', function (Blueprint $table) {      
             // Opción 1: Usar el método 'id()' estándar para la clave primaria
             $table->id(); 
             
