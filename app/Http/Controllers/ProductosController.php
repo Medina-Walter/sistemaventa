@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Producto;
 use App\Repositories\ProductoRepository;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,7 +22,7 @@ class ProductosController extends Controller
     public function index()
     {
         $productos = $this->productoRepository->obtenerTodos();
-        return view('productos.index', compact('productos'));
+        return view('modules.productos.index', compact('productos'));
     }
 
     /**
@@ -31,7 +30,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        return view('productos.create');
+        return view('modules.productos.create');
     }
 
     /**
@@ -40,23 +39,29 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         try {
+
             $datos = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'codigo' => 'required|string|max:50',
-            'id_imagen' => 'nullable|intener',
-            'descripcion' => 'required|string|max:255',
-            'stock' => 'required|integer|min:0',
-            'precio_compra' => 'required|numeric|min:0',
-            'precio_venta' => 'required|numeric|min:0',
-            'id_categoria' => 'nullable|intener',
-            'id_categoria' => 'nullable|intener',
-        ]);
+                'nombre' => 'required|string|max:255',
+                'codigo' => 'required|string|max:50',
+                'descripcion' => 'required|string|max:255',
+                'stock' => 'required|integer|min:0',
+                'precio_compra' => 'required|numeric|min:0',
+                'precio_venta' => 'required|numeric|min:0',
+                'id_imagen' => 'nullable|integer',
+                'id_categoria' => 'nullable|integer',
+            ]);
 
-        $this->productoRepository->crear($datos);
+            $this->productoRepository->crear($datos);
 
-        return redirect()->route('productos.index')->with('success', 'Producto Creado con existo');
+            return redirect()
+                ->route('productos.index')
+                ->with('success', 'Producto creado con éxito');
+
         } catch (Exception $e) {
-            return redirect()->route('productos.index')->with('error', 'Error, no se pudo crear el producto'. $e->getMessage());
+
+            return redirect()
+                ->route('productos.index')
+                ->with('error', 'Error al crear producto: ' . $e->getMessage());
         }
     }
 
@@ -71,7 +76,7 @@ class ProductosController extends Controller
             return redirect()->route('productos.index')->withErrors('El producto no existe.');
         }
 
-        return view('productos.show', compact('producto'));
+        return view('modules.productos.show', compact('producto'));
     }
 
     /**
@@ -80,7 +85,8 @@ class ProductosController extends Controller
     public function edit(string $id)
     {
         $producto = $this->productoRepository->obtenerPorId($id);
-        return view('productos.edit', compact('producto'));
+
+        return view('modules.productos.edit', compact('producto'));
     }
 
     /**
@@ -89,23 +95,29 @@ class ProductosController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+
             $datos = $request->validate([
-            'nombre' => 'required|string|max:255',
-            'codigo' => 'required|intner|min:0',
-            'id_imagen' => 'nullable|intener',
-            'descripcion' => 'required|string|max:255',
-            'stock' => 'required|integer|min:0',
-            'precio_compra' => 'required|numeric|min:0',
-            'precio_venta' => 'required|numeric|min:0',
-            'id_categoria' => 'nullable|intener',
-            'id_categoria' => 'nullable|intener',
-        ]);
+                'nombre' => 'required|string|max:255',
+                'codigo' => 'required|string|max:50',
+                'descripcion' => 'required|string|max:255',
+                'stock' => 'required|integer|min:0',
+                'precio_compra' => 'required|numeric|min:0',
+                'precio_venta' => 'required|numeric|min:0',
+                'id_imagen' => 'nullable|integer',
+                'id_categoria' => 'nullable|integer',
+            ]);
 
-        $this->productoRepository->actualizar($id, $datos);
+            $this->productoRepository->actualizar($id, $datos);
 
-            return redirect()->route('productos.index')->with('success', 'Productos actualizado correctamente');
+            return redirect()
+                ->route('productos.index')
+                ->with('success', 'Producto actualizado correctamente');
+
         } catch (Exception $e) {
-            return redirect()->route('productos.index')->with('error', 'No se pudo actualizar el producto');
+
+            return redirect()
+                ->route('productos.index')
+                ->with('error', 'No se pudo actualizar: ' . $e->getMessage());
         }
     }
 
@@ -114,13 +126,19 @@ class ProductosController extends Controller
      */
     public function destroy(string $id)
     {
-
         try {
+
             $this->productoRepository->eliminar($id);
-            return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
+
+            return redirect()
+                ->route('productos.index')
+                ->with('success', 'Producto eliminado correctamente');
+
         } catch (Exception $e) {
-            return redirect()->route('productos.index')->with('error', 'No se pudo eliminar el producto correctamente' . $e->getMessage());
+
+            return redirect()
+                ->route('productos.index')
+                ->with('error', 'No se pudo eliminar el producto: ' . $e->getMessage());
         }
-        
     }
 }

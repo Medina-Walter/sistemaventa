@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Middleware\CheckUsuarioAutenticado;
+use App\Http\Controllers\CategoriasController;
 
 // Grupo de rutas protegidas por sesión
 Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
@@ -13,10 +14,6 @@ Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
     Route::get('/home', function () {
         return view('modules.dashboard.home');
     });
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoriasController;
-
 
     // Panel de usuarios
     Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
@@ -33,20 +30,19 @@ use App\Http\Controllers\CategoriasController;
     Route::put('/usuarios/{id}/password', [UsuarioController::class, 'updatePassword'])->name('usuarios.password.update');
 
     // CRUD de productos
-    Route::resource('productos', ProductosController::class);
+    
+
+    // CRUD de categorías
+    
 });
 
 // Formulario de login
-Route::get('/login', function () {
+Route::get('/login', function () { 
     return view('auth.login');
 })->name('login');
 
 // Procesamiento del login
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 Route::resource('productos', ProductosController::class);
-
 Route::resource('categorias', CategoriasController::class);
-

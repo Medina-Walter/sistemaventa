@@ -19,12 +19,12 @@ class CategoriasController extends Controller
     public function index()
     {
         $categorias = $this->categoriaRepository->obtenerTodos();
-        return view('categorias.index', compact('categorias'));
+        return view('modules.categorias.index', compact('categorias'));
     }
 
     public function create()
     {
-        return view('categorias.create');
+        return view('modules.categorias.create');
     }
 
     public function store(Request $request)
@@ -37,9 +37,9 @@ class CategoriasController extends Controller
 
             $this->categoriaRepository->crear($datos);
 
-            return redirect()->route('categorias.index')->with('success', 'Categoría creada con éxito.');
+            return redirect()->route('modules.categorias.index')->with('success', 'Categoría creada con éxito.');
         } catch (Exception $e) {
-            return redirect()->route('categorias.index')->with('error', 'Error al crear la categoría.'. $e->getMessage());
+            return redirect()->route('modules.categorias.index')->with('error', 'Error al crear la categoría.'. $e->getMessage());
         }
     }
 
@@ -48,11 +48,10 @@ class CategoriasController extends Controller
         $categoria = $this->categoriaRepository->obtenerPorId($id);
 
         if (!$categoria) {
-            return redirect()->route('categorias.index')
-                ->withErrors('La categoría no existe.');
+            return redirect()->route('categorias.index')->withErrors('La categoría no existe.');
         }
 
-        return view('categorias.show', compact('categoria'));
+        return view('modules.categorias.show', compact('categoria'));
     }
 
     public function edit($id)
@@ -60,11 +59,10 @@ class CategoriasController extends Controller
         $categoria = $this->categoriaRepository->obtenerPorId($id);
 
         if (!$categoria) {
-            return redirect()->route('categorias.index')
-                ->withErrors('La categoría no existe.');
+            return redirect()->route('modules.categorias.index')->withErrors('La categoría no existe.');
         }
 
-        return view('categorias.edit', compact('categoria'));
+        return view('modules.categorias.edit', compact('categoria'));
     }
 
     public function update(Request $request, $id)
@@ -77,10 +75,9 @@ class CategoriasController extends Controller
 
             $this->categoriaRepository->actualizar($id, $datos);
 
-            return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente.');
+            return redirect()->route('modules.categorias.index')->with('success', 'Categoría actualizada correctamente.');
         } catch (Exception $e) {
-            Log::error('Error al actualizar categoría');
-            return redirect()->route('categorias.index')->with('error', 'Error al actualizar la categoría.' . $e->getMessage());
+            return redirect()->route('modules.categorias.index')->with('error', 'Error al actualizar la categoría.' . $e->getMessage());
         }
     }
 
@@ -88,11 +85,9 @@ class CategoriasController extends Controller
     {
         try {
             $this->categoriaRepository->eliminar($id);
-            return redirect()->route('categorias.index')
-                ->with('success', '✅ Categoría eliminada correctamente.');
+            return redirect()->route('modules.categorias.index')->with('success', 'Categoría eliminada correctamente.');
         } catch (Exception $e) {
-            Log::error('Error al eliminar categoría');
-            return redirect()->route('categorias.index')->with('error', 'No se pudo eliminar la categoría.' . $e->getMessage());
+            return redirect()->route('modules.categorias.index')->with('error', 'No se pudo eliminar la categoría.' . $e->getMessage());
         }
     }
 }
