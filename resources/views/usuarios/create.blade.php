@@ -3,16 +3,19 @@
 @section('titulo', 'Agregar nuevo usuario')
 
 @section('contenido')
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-7">
-            <div class="card border-0 shadow-lg">
-                <div class="card-header bg-gradient bg-primary text-white text-center">
-                    <h5 class="mb-0"><i class="bi bi-person-plus-fill me-2"></i> Registro de nuevo usuario</h5>
-                </div>
-                <div class="card-body">
 
-                    @if ($errors->any())
+<main id="main" class="main">
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header bg-gradient bg-primary text-white text-center">
+                    <h5 class="mb-0"><i class="bi bi-person-plus-fill me-2"></i> Registro de nuevo usuario</h5>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Bienvenido, {{ session('usuario_nombre') }}</h5>
+              @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="mb-0">
                                 @foreach ($errors->all() as $error)
@@ -24,7 +27,6 @@
 
                     <form method="POST" action="{{ route('usuarios.store') }}">
                         @csrf
-
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -56,7 +58,6 @@
                             <div class="col-md-6">
                                 <label for="rol" class="form-label">Rol</label>
                                 <select name="rol" id="rol" class="form-select" required>
-                                    <option value="">Seleccionar rol</option>
                                     <option value="admin" {{ old('rol') == 'admin' ? 'selected' : '' }}>Administrador</option>
                                     <option value="usuario" {{ old('rol') == 'usuario' ? 'selected' : '' }}>Usuario</option>
                                 </select>
@@ -72,9 +73,10 @@
                             </a>
                         </div>
                     </form>
-                </div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+    </section>
+  </main>
 @endsection

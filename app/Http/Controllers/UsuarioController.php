@@ -43,7 +43,7 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
-    public function toggleEstado($id)
+    public function cambiarEstadoUsuario($id)
     {
         $usuario = Usuario::findOrFail($id);
         $usuario->estado = !$usuario->estado;
