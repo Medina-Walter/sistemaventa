@@ -10,7 +10,7 @@ class UsuarioController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::paginate(10);
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -22,12 +22,12 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required|string',
-            'apellido' => 'required|string',
-            'usuario' => 'required|string|unique:usuarios,usuario',
+            'nombre' => 'required|string|max:100',
+            'apellido' => 'required|string|max:100',
+            'usuario' => 'required|string|max:50|unique:usuarios,usuario',
             'correo' => 'required|email|unique:usuarios,correo',
             'password' => 'required|string|min:8|confirmed',
-            'rol' => 'required|string',
+            'rol' => 'required|in:admin,empleado',
         ]);
 
         Usuario::create([
@@ -43,9 +43,8 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
-    public function toggleEstado($id)
+    public function toggleEstado(Usuario $usuario) // ← corregido
     {
-        $usuario = Usuario::findOrFail($id);
         $usuario->estado = !$usuario->estado;
         $usuario->save();
 
@@ -61,10 +60,10 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|string',
-            'apellido' => 'required|string',
-            'usuario' => 'required|string',
-            'rol' => 'required|string',
+            'nombre' => 'required|string|max:100',
+            'apellido' => 'required|string|max:100',
+            'usuario' => 'required|string|max:50',
+            'rol' => 'required|in:admin,empleado',
         ]);
 
         $usuario = Usuario::findOrFail($id);
