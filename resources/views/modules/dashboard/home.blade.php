@@ -31,7 +31,6 @@
             <ul class="list-group list-group-flush">
 
             </ul>
-
           </div>
         </div>
       </div>

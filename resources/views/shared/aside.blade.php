@@ -81,24 +81,12 @@
         </li>
       </ul>
     </li><!-- End Proveedores Nav -->
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#usuarios-nav" data-bs-toggle="collapse">
-        <i class="fa-solid fa-users"></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="usuarios-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="{{ route('usuarios.index') }}">
-            <i class="bi bi-circle"></i><span>Listado de usuarios</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('usuarios.create') }}">
-            <i class="bi bi-circle"></i><span>Registrar nuevo usuario</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End Usuarios Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route("usuarios.index") }}">
+          <i class="fa-solid fa-users"></i>
+          <span>Usuarios</span>
+        </a>
+      </li><!-- End Blank Page Nav -->
 
   </ul>
 </aside>

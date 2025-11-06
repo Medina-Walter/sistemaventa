@@ -29,10 +29,10 @@ class ProductosController extends Controller
                     $q->where('nombre', 'like', "%{$query}%")
                       ->orWhere('codigo', 'like', "%{$query}%");
                 }
-            })
-            ->paginate(10);
+            })->paginate(10);
 
         return view('productos.index', compact('productos', 'query'));
+        $productos = $this->productoRepository->obtenerTodos();
     }
 
     public function create()
@@ -45,6 +45,7 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         try {
+
             $datos = $request->validate([
                 'nombre' => 'required|string|max:255',
                 'codigo' => 'required|string|max:50',
@@ -85,14 +86,12 @@ class ProductosController extends Controller
             return redirect()->route('productos.index')->withErrors('El producto no existe.');
         }
 
-        return view('productos.show', compact('producto'));
+        return view('modules.productos.show', compact('producto'));
     }
 
     public function edit(string $id)
     {
         $producto = $this->productoRepository->obtenerPorId($id);
-        $categorias = Categoria::all();
-        $proveedores = Proveedor::all();
 
         return view('productos.edit', compact('producto', 'categorias', 'proveedores'));
     }
@@ -100,6 +99,7 @@ class ProductosController extends Controller
     public function update(Request $request, string $id)
     {
         try {
+
             $datos = $request->validate([
                 'nombre' => 'required|string|max:255',
                 'codigo' => 'required|string|max:50',
@@ -128,13 +128,14 @@ class ProductosController extends Controller
 
             return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente');
         } catch (Exception $e) {
-            return redirect()->route('productos.index')->with('error', 'No se pudo actualizar el producto: ' . $e->getMessage());
+            return redirect()->route('productos.index')->with('error', 'No se pudo actualizar: ' . $e->getMessage());
         }
     }
 
     public function destroy(string $id)
     {
         try {
+
             $this->productoRepository->eliminar($id);
             return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
         } catch (Exception $e) {

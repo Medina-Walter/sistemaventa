@@ -30,22 +30,23 @@ class AuthController extends Controller
         $usuario = Usuario::where('usuario', $request->usuario)->first();
 
         if ($usuario && Hash::check($request->password, $usuario->password)) {
+
             if (!$usuario->estado) {
                 return back()->withErrors([
                     'usuario' => 'Este usuario está inactivo.',
                 ])->withInput();
             }
 
-            Session::put('usuario_id', $usuario->id_usuario);
+            Session::put('usuario_id', $usuario->id);
             Session::put('usuario_nombre', $usuario->nombre . ' ' . $usuario->apellido);
             Session::put('usuario_rol', $usuario->rol);
+            Session::put('id', $usuario->id);
+            Session::put('nombre', $usuario->nombre);
 
             return redirect('/home');
         }
 
-        return back()->withErrors([
-            'usuario' => 'Credenciales incorrectas.',
-        ])->withInput();
+        return back()->withErrors(['usuario' => 'Credenciales incorrectas.',])->withInput();
     }
 
     /**

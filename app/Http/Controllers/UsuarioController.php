@@ -43,7 +43,7 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
 
-    public function toggleEstado(Usuario $usuario) // ← corregido
+    public function cambiarEstadoUsuario($id)
     {
         $usuario->estado = !$usuario->estado;
         $usuario->save();
