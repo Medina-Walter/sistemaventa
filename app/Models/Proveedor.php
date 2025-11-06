@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use App\Repositories\ProductoRepository;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
-    use HasFactory;
+    protected $table = 'proveedores'; // nombre exacto de la tabla
 
-    protected $table = 'proveedores';
+    protected $primaryKey = 'id_proveedor'; // clave primaria personalizada
 
-    protected $primaryKey = 'id_proveedor';
+    public $timestamps = true; // usa created_at y updated_at
 
     protected $fillable = [
         'nombre',
@@ -22,9 +20,4 @@ class Proveedor extends Model
         'sitio_web',
         'nota',
     ];
-
-    public function productos()
-    {
-        return $this->hasMany(Producto::class, 'id_proveedor');
-    }
 }

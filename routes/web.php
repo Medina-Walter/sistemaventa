@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\CategoriasController;
 use App\Http\Middleware\CheckUsuarioAutenticado;
 use App\Http\Controllers\CategoriasController;
 
-// Grupo de rutas protegidas por sesión
 Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
 
     // Rutas para editar usuario

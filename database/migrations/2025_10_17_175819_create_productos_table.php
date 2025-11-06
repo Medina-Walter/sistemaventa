@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('codigo', 50)->unique();
             $table->text('descripcion')->nullable(); // Una descripción suele ser más larga que un string
             $table->integer('stock')->default(0); // El stock inicial puede ser 0
-            $table->decimal('precio_compra', 10, 2);
+            $table->decimal('precio_compra', total: 10, 2);
             $table->decimal('precio_venta', 10, 2);
             
             // 🔹 Claves Foráneas (solo columnas de definición)

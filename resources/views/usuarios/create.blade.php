@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('titulo', 'Agregar nuevo usuario')
+@section('titulo', 'Registrar Usuario')
 
 @section('contenido')
 
@@ -37,24 +37,15 @@
                                 <input type="text" name="apellido" id="apellido" class="form-control" required value="{{ old('apellido') }}">
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="usuario" class="form-label">Usuario</label>
-                                <input type="text" name="usuario" id="usuario" class="form-control" required value="{{ old('usuario') }}">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="correo" class="form-label">Correo electrónico</label>
-                                <input type="email" name="correo" id="correo" class="form-control" required value="{{ old('correo') }}">
-                            </div>
+              <div class="mb-3">
+                <label class="form-label">Usuario</label>
+                <input type="text" name="usuario" class="form-control" required>
+              </div>
 
-                            <div class="col-md-6">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" name="password" id="password" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
-                                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-                            </div>
-
+              <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="email" name="correo" class="form-control" required>
+              </div>
                             <div class="col-md-6">
                                 <label for="rol" class="form-label">Rol</label>
                                 <select name="rol" id="rol" class="form-select" required>
