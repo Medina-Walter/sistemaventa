@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Proveedor extends Model
 {
-    protected $table = 'proveedores'; // nombre exacto de la tabla
+    protected $table = 'proveedores';
 
-    protected $primaryKey = 'id_proveedor'; // clave primaria personalizada
+    protected $primaryKey = 'id';
 
-    public $timestamps = true; // usa created_at y updated_at
+    public $timestamps = true;
 
     protected $fillable = [
         'nombre',

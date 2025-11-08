@@ -9,8 +9,9 @@ class ProveedorRepository
 {
     public function obtenerTodos()
     {
-        return Proveedor::all();
+    return Proveedor::paginate(10);
     }
+
 
     public function obtenerPorId($id)
     {

@@ -11,12 +11,12 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios = Usuario::paginate(10);
-        return view('usuarios.index', compact('usuarios'));
+        return view('modules.usuarios.index', compact('usuarios'));
     }
 
     public function create()
     {
-        return view('usuarios.create');
+        return view('modules.usuarios.create');
     }
 
     public function store(Request $request)
@@ -45,6 +45,7 @@ class UsuarioController extends Controller
 
     public function cambiarEstadoUsuario($id)
     {
+        $usuario = Usuario::findOrFail($id);
         $usuario->estado = !$usuario->estado;
         $usuario->save();
 
@@ -54,7 +55,7 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario = Usuario::findOrFail($id);
-        return view('usuarios.edit', compact('usuario'));
+        return view('modules.usuarios.edit', compact('usuario'));
     }
 
     public function update(Request $request, $id)
@@ -63,19 +64,20 @@ class UsuarioController extends Controller
             'nombre' => 'required|string|max:100',
             'apellido' => 'required|string|max:100',
             'usuario' => 'required|string|max:50',
+            'correo' => 'required|email',
             'rol' => 'required|in:admin,empleado',
         ]);
 
         $usuario = Usuario::findOrFail($id);
-        $usuario->update($request->only(['nombre', 'apellido', 'usuario', 'rol']));
+        $usuario->update($request->only(['nombre', 'apellido', 'usuario', 'correo', 'rol']));
 
-        return redirect('/home')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
     public function editPassword($id)
     {
         $usuario = Usuario::findOrFail($id);
-        return view('usuarios.password', compact('usuario'));
+        return view('modules.usuarios.password', compact('usuario'));
     }
 
     public function updatePassword(Request $request, $id)
@@ -88,6 +90,6 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->password);
         $usuario->save();
 
-        return redirect('/home')->with('success', 'Contraseña actualizada correctamente.');
+        return redirect()->route('usuarios.index')->with('success', 'Contraseña actualizada correctamente.');
     }
 }

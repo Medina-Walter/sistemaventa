@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('titulo', 'Cambiar Contraseña')
+@section('titulo', 'Editar Categoría')
 
 @section('contenido')
 <main id="main" class="main">
@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card shadow">
-          <div class="card-header fw-bold text-center">Cambiar contraseña</div>
+          <div class="card-header fw-bold text-center">Editar categoría</div>
 
           <div class="card-body">
             @if ($errors->any())
@@ -21,23 +21,18 @@
               </div>
             @endif
 
-            <form method="POST" action="{{ route('usuarios.updatePassword', $usuario->id_usuario) }}">
+            <form method="POST" action="{{ route('categorias.update', $categoria->id) }}">
               @csrf
               @method('PUT')
 
               <div class="mb-3">
-                <label class="form-label">Nueva contraseña</label>
-                <input type="password" name="password" class="form-control" required>
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Confirmar contraseña</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
+                <label class="form-label">Nombre de categoría</label>
+                <input type="text" name="nombre" class="form-control" value="{{ old('nombre', $categoria->nombre) }}" required>
               </div>
 
               <div class="d-flex justify-content-between">
-                <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+                <a href="{{ route('categorias.index') }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Actualizar categoría</button>
               </div>
             </form>
           </div>

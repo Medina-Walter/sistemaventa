@@ -31,21 +31,19 @@ class ProductosController extends Controller
                 }
             })->paginate(10);
 
-        return view('productos.index', compact('productos', 'query'));
-        $productos = $this->productoRepository->obtenerTodos();
+        return view('modules.productos.index', compact('productos', 'query'));
     }
 
     public function create()
     {
         $categorias = Categoria::all();
         $proveedores = Proveedor::all();
-        return view('productos.create', compact('categorias', 'proveedores'));
+        return view('modules.productos.create', compact('categorias', 'proveedores'));
     }
 
     public function store(Request $request)
     {
         try {
-
             $datos = $request->validate([
                 'nombre' => 'required|string|max:255',
                 'codigo' => 'required|string|max:50',
@@ -73,12 +71,13 @@ class ProductosController extends Controller
             $this->productoRepository->crear($datos);
 
             return redirect()->route('productos.index')->with('success', 'Producto creado con éxito');
+
         } catch (Exception $e) {
             return redirect()->route('productos.index')->with('error', 'Error al crear el producto: ' . $e->getMessage());
         }
     }
 
-    public function show(string $id)
+    public function show($id)
     {
         $producto = $this->productoRepository->obtenerPorId($id);
 
@@ -89,17 +88,18 @@ class ProductosController extends Controller
         return view('modules.productos.show', compact('producto'));
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
         $producto = $this->productoRepository->obtenerPorId($id);
+        $categorias = Categoria::all();
+        $proveedores = Proveedor::all();
 
-        return view('productos.edit', compact('producto', 'categorias', 'proveedores'));
+        return view('modules.productos.edit', compact('producto', 'categorias', 'proveedores'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         try {
-
             $datos = $request->validate([
                 'nombre' => 'required|string|max:255',
                 'codigo' => 'required|string|max:50',
@@ -132,10 +132,9 @@ class ProductosController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
-
             $this->productoRepository->eliminar($id);
             return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
         } catch (Exception $e) {

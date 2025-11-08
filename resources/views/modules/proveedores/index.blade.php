@@ -1,21 +1,22 @@
 @extends('layouts.main')
-
-@section('titulo', 'Listado de Proveedores')
-
+@section('titulo', 'Dashboard')
 @section('contenido')
 <main id="main" class="main">
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Proveedores</h2>
-    </div>
 
-    @if (session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+  <div class="pagetitle flex justify-between items-center">
+    <h1>Proveedores</h1>
+  </div>
 
-    <div class="card shadow">
-      <div class="card-body">
-        <table class="table table-bordered table-hover">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center mt-3">
+              <h5 class="mb-0">Proveedores registrados</h5>
+                <a href="{{ route('proveedores.create') }}" class="btn btn-light text-primary fw-bold">Agregar Nuevo Proveedor</a>
+            </div>
+            <table class="table table-bordered table-hover">
           <thead class="table-light">
             <tr>
               <th>Nombre</th>
@@ -35,8 +36,8 @@
                 <td>{{ $proveedor->direccion }}</td>
                 <td>{{ $proveedor->sitio_web }}</td>
                 <td class="d-flex gap-2">
-                  <a href="{{ route('proveedores.edit', $proveedor->id_proveedor) }}" class="btn btn-sm btn-primary">Editar</a>
-                  <form method="POST" action="{{ route('proveedores.destroy', $proveedor->id_proveedor) }}">
+                  <a href="{{ route('proveedores.edit', $proveedor->id) }}" class="btn btn-sm btn-primary">Editar</a>
+                  <form method="POST" action="{{ route('proveedores.destroy', $proveedor->id) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</button>
@@ -46,12 +47,11 @@
             @endforeach
           </tbody>
         </table>
-
-        <div class="mt-3">
-          {{ $proveedores->links() }}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </main>
 @endsection

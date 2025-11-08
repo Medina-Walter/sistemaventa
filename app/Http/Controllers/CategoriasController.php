@@ -31,15 +31,17 @@ class CategoriasController extends Controller
     {
         try {
             $datos = $request->validate([
-                'nombre' => 'required|string|max:255',
+                'nombre' => 'required|string|max:255|unique:categorias,nombre',
                 'descripcion' => 'nullable|string|max:255',
             ]);
 
+
             $this->categoriaRepository->crear($datos);
 
-            return redirect()->route('modules.categorias.index')->with('success', 'Categoría creada con éxito.');
+            return redirect()->route('categorias.index')->with('success', 'Categoría creada con éxito.');
         } catch (Exception $e) {
-            return redirect()->route('modules.categorias.index')->with('error', 'Error al crear la categoría.'. $e->getMessage());
+
+            return redirect()->route('categorias.index')->with('error', 'Error al crear la categoría.' . $e->getMessage());
         }
     }
 
@@ -59,7 +61,7 @@ class CategoriasController extends Controller
         $categoria = $this->categoriaRepository->obtenerPorId($id);
 
         if (!$categoria) {
-            return redirect()->route('modules.categorias.index')->withErrors('La categoría no existe.');
+            return redirect()->route('categorias.index')->withErrors('La categoría no existe.');
         }
 
         return view('modules.categorias.edit', compact('categoria'));
@@ -75,9 +77,9 @@ class CategoriasController extends Controller
 
             $this->categoriaRepository->actualizar($id, $datos);
 
-            return redirect()->route('modules.categorias.index')->with('success', 'Categoría actualizada correctamente.');
+            return redirect()->route('categorias.index')->with('success', 'Categoría actualizada correctamente.');
         } catch (Exception $e) {
-            return redirect()->route('modules.categorias.index')->with('error', 'Error al actualizar la categoría.' . $e->getMessage());
+            return redirect()->route('categorias.index')->with('error', 'Error al actualizar la categoría.' . $e->getMessage());
         }
     }
 
@@ -85,9 +87,9 @@ class CategoriasController extends Controller
     {
         try {
             $this->categoriaRepository->eliminar($id);
-            return redirect()->route('modules.categorias.index')->with('success', 'Categoría eliminada correctamente.');
+            return redirect()->route('categorias.index')->with('success', 'Categoría eliminada correctamente.');
         } catch (Exception $e) {
-            return redirect()->route('modules.categorias.index')->with('error', 'No se pudo eliminar la categoría.' . $e->getMessage());
+            return redirect()->route('categorias.index')->with('error', 'No se pudo eliminar la categoría.' . $e->getMessage());
         }
     }
 }
