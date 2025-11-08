@@ -21,7 +21,7 @@
               </div>
             @endif
 
-            <form method="POST" action="{{ route('productos.update', $producto->id_producto) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('productos.update', $producto->id) }}" enctype="multipart/form-data">
               @csrf
               @method('PUT')
 
@@ -60,7 +60,7 @@
                 <select name="id_categoria" class="form-select" required>
                   <option value="">Seleccionar categoría</option>
                   @foreach ($categorias as $categoria)
-                    <option value="{{ $categoria->id_categoria }}" {{ $producto->id_categoria == $categoria->id_categoria ? 'selected' : '' }}>
+                    <option value="{{ $categoria->id }}" {{ $producto->id_categoria == $categoria->id ? 'selected' : '' }}>
                       {{ $categoria->nombre }}
                     </option>
                   @endforeach

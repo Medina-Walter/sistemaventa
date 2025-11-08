@@ -7,10 +7,6 @@
 
   <div class="pagetitle flex justify-between items-center">
     <h1>Dashboard</h1>
-    <form method="POST" action="{{ route('logout') }}">
-      @csrf
-      
-    </form>
   </div>
 
   @if (session('success'))
@@ -26,9 +22,6 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Bienvenido, {{ session('usuario_nombre') }}</h5>
-
-            <!-- Accesos rápidos a vistas -->
-            <ul class="list-group list-group-flush">
 
             </ul>
           </div>

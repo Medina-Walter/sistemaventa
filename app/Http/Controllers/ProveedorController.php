@@ -6,7 +6,7 @@ use App\Repositories\ProveedorRepository;
 use Illuminate\Http\Request;
 use Exception;
 
-class ProveedoresController extends Controller
+class ProveedorController extends Controller
 {
     protected $proveedorRepository;
 
@@ -40,10 +40,10 @@ class ProveedoresController extends Controller
 
             $this->proveedorRepository->crear($datos);
 
-            return redirect()->route('modules.proveedores.index')->with('success', 'Proveedor creado correctamente.');
+            return redirect()->route('proveedores.index')->with('success', 'Proveedor creado correctamente.');
 
         } catch (Exception $e) {
-            return redirect()->route('modules.proveedores.index')->with('error', 'No se pudo crear el proveedor.' . $e->getMessage());
+            return redirect()->route('proveedores.index')->with('error', 'No se pudo crear el proveedor.' . $e->getMessage());
         }
     }
 
@@ -52,7 +52,7 @@ class ProveedoresController extends Controller
         $proveedor = $this->proveedorRepository->obtenerPorId($id);
 
         if (!$proveedor) {
-            return redirect()->route('modules.proveedores.index')->withErrors("El proveedor no existe.");
+            return redirect()->route('proveedores.index')->withErrors("El proveedor no existe.");
         }
 
         return view('modules.proveedores.show', compact('proveedor'));
@@ -63,7 +63,7 @@ class ProveedoresController extends Controller
         $proveedor = $this->proveedorRepository->obtenerPorId($id);
 
         if (!$proveedor) {
-            return redirect()->route('modules.proveedores.index')->withErrors("El proveedor no existe.");
+            return redirect()->route('proveedores.index')->withErrors("El proveedor no existe.");
         }
 
         return view('modules.proveedores.edit', compact('proveedor'));
@@ -83,9 +83,9 @@ class ProveedoresController extends Controller
 
             $this->proveedorRepository->actualizar($id, $datos);
 
-            return redirect()->route('modules.proveedores.index')->with('success', 'Proveedor actualizado correctamente.');
+            return redirect()->route('proveedores.index')->with('success', 'Proveedor actualizado correctamente.');
         } catch (Exception $e) {
-            return redirect()->route('modules.proveedores.index')->with('error', 'No se pudo actualizar el proveedor.' . $e->getMessage());
+            return redirect()->route('proveedores.index')->with('error', 'No se pudo actualizar el proveedor.' . $e->getMessage());
         }
     }
 
@@ -93,9 +93,9 @@ class ProveedoresController extends Controller
     {
         try {
             $this->proveedorRepository->eliminar($id);
-            return redirect()->route('modules.proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
+            return redirect()->route('proveedores.index')->with('success', 'Proveedor eliminado correctamente.');
         } catch (Exception $e) {
-            return redirect()->route('modules.proveedores.index')->with('error', 'No se pudo eliminar el proveedor.' . $e->getMessage());
+            return redirect()->route('proveedores.index')->with('error', 'No se pudo eliminar el proveedor.' . $e->getMessage());
         }
     }
 }
