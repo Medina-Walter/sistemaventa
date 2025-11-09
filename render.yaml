@@ -2,14 +2,27 @@ services:
   - type: web
     name: sistemaventa
     env: php
+    plan: free
+    region: oregon
+
     buildCommand: |
       composer install --no-dev --optimize-autoloader
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
-    plan: free
+      php artisan key:generate
+      php artisan migrate --force
 
-databases:
-  - name: sistemaventa-db
-    plan: free
+    startCommand: |
+      php artisan serve --host 0.0.0.0 --port $PORT
+
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: sqlite
+
+    disk:
+      name: data
+      mountPath: /var/data
