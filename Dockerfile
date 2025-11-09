@@ -36,3 +36,8 @@ EXPOSE 8080
 
 # Comando que ejecutará Render
 CMD php artisan serve --host 0.0.0.0 --port 8080
+
+
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
