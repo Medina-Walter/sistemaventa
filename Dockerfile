@@ -26,7 +26,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Generar APP_KEY
-RUN php artisan key:generate
+# RUN php artisan key:generate
 
 # Permisos para storage y cache
 RUN chmod -R 777 storage bootstrap/cache
