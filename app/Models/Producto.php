@@ -34,4 +34,10 @@ class Producto extends Model
     {
         return $this->belongsTo(Imagen::class, 'id_imagen');
     }
+
+    public function descontarStock(int $cantidad): int
+    {
+        $this->stock -= $cantidad;
+        return $this->stock;
+    }
 }
