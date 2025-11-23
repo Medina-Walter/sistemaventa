@@ -3,63 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venta;
-use Illuminate\Http\Request;
+use App\Models\DetalleVenta;
+use App\Models\Producto;
+use App\Repositories\CarritoRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VentaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected $carrito;
+
+    public function __construct(CarritoRepository $carrito)
     {
-        //
+        $this->carrito = $carrito;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function confirmarVenta()
     {
-        //
-    }
+        $carrito = $this->carrito->obtenerCarrito();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (empty($carrito)) {
+            return back()->with('error', 'El carrito está vacío.');
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Venta $venta)
-    {
-        //
-    }
+        DB::beginTransaction();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Venta $venta)
-    {
-        //
-    }
+        try {
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Venta $venta)
-    {
-        //
-    }
+            // Crear venta
+            $venta = Venta::create([
+                'id_usuario'  => Auth::id(),
+                'fecha_venta' => now(),
+                'monto_total' => $this->carrito->total()
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Venta $venta)
-    {
-        //
+            // Descontar stock y crear detalle
+            foreach ($carrito as $item) {
+
+                $producto = Producto::findOrFail($item['id']);
+
+                if ($producto->stock < $item['cantidad']) {
+                    DB::rollBack();
+                    return back()->with('error', "Stock insuficiente para: {$producto->nombre}");
+                }
+
+                // Descontar stock
+                $producto->stock -= $item['cantidad'];
+                $producto->save();
+
+                // Crear detalle de la venta
+                DetalleVenta::create([
+                    'id_venta'       => $venta->id,
+                    'id_producto'    => $item['id'],
+                    'cantidad'       => $item['cantidad'],
+                    'precio_unitario'=> $item['precio_venta'],
+                    'sub_total'      => $item['subtotal']
+                ]);
+            }
+
+            DB::commit();
+
+            $this->carrito->vaciarCarrito();
+
+            return redirect()->route('carrito.index')
+                ->with('success', 'Venta realizada con éxito.');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 }
