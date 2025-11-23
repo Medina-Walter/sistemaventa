@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DetalleVenta extends Model
 {
-    use HasFactory;
+    protected $table = 'detalle_ventas';
 
     protected $fillable = [
         'id_venta',
         'id_producto',
         'cantidad',
         'precio_unitario',
-        'sub_total',
+        'sub_total'
     ];
 
     public function venta()

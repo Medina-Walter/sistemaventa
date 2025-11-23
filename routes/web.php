@@ -3,22 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\VentaController;
 use App\Http\Middleware\CheckUsuarioAutenticado;
 
 Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
 
 });
 
-// Formulario de login
 Route::get('/login', function () { 
     return view('auth.login');
 })->name('login');
 
-// Procesamiento del login
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/home', function () { return view('modules.dashboard.home');})->name('home');
@@ -54,5 +54,13 @@ Route::post('/categorias', [CategoriasController::class, 'store'])->name('catego
 Route::get('/categorias/{id}/edit', [CategoriasController::class, 'edit'])->name('categorias.edit');
 Route::put('/categorias/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
 Route::delete('/categorias/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
+
+Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+Route::put('/carrito/actualizar', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
+Route::delete('/carrito/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
+Route::delete('/carrito', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
+
+Route::post('/ventas/confirmar', [VentaController::class, 'confirmarVenta'])->name('ventas.confirmar');
 
 
