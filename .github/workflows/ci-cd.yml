@@ -1,30 +1,32 @@
-name: CI-Laravel-Docker
+name: CI-Laravel-Docker #nombre del proceso de ci cd
 
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - main # se ejecuta cuando hay cambios en la rama principal
+  pull_request: #se eejecuta cuando se hace un PR
 
 jobs:
-  build-test-deploy:
-    runs-on: ubuntu-latest
+  build-test-deploy: # agrupar todos los pasos
+    runs-on: ubuntu-latest #usa Ubuntu para ejecutar el pipeline
 
     steps:
-      - name: Checkout código
+      - name: Checkout código #descargar el codigo del repositorio
         uses: actions/checkout@v3
 
-      - name: Copiar .env de ejemplo
+      - name: Copiar .env de ejemplo #copia el env para configurara variables de entorni
         run: cp .env.example .env
 
-      - name: Instalar dependencias PHP
+      - name: Instalar dependencias PHP #instala las dependencias necesarias
         run: composer install --no-interaction --prefer-dist
 
-      - name: Generar key de Laravel
+      - name: Generar key de Laravel #generar clave de seguridad
         run: php artisan key:generate
 
-      - name: Ejecutar tests
+      - name: Ejecutar tests # se utiliza para pruebas automaticas con PHPunit(planificadas pero no activas)
         run: php artisan test
 
-      - name: Construir y desplegar con Docker
+      - name: Construir y desplegar con Docker # levanta el sistema usando docker
         run: docker-compose up --build -d
+
+        #todo forma parte de definicion de un pipeline automatizaado

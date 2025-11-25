@@ -28,8 +28,8 @@
               <tr>
                 <td>{{ $categoria->nombre }}</td>
                 <td class="d-flex gap-2">
-                  <a href="{{ route('categorias.edit', $categoria->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                  <form method="POST" action="{{ route('categorias.destroy', $categoria->id) }}">
+                  <a href="{{ route('categorias.edit', $categoria->id_categoria) }}" class="btn btn-sm btn-primary">Editar</a>
+                  <form method="POST" action="{{ route('categorias.destroy', $categoria->id_categoria) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar categoría?')">Eliminar</button>

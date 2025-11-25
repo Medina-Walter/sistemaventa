@@ -2,56 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrito;
 use Illuminate\Http\Request;
-use App\Repositories\CarritoRepository;
-use App\Models\Producto;
 
 class CarritoController extends Controller
 {
-    protected $carrito;
-
-    public function __construct(CarritoRepository $carrito)
-    {
-        $this->carrito = $carrito;
-    }
-
     public function index()
     {
-        $carrito = $this->carrito->obtenerCarrito();
-        $total = $this->carrito->total();
-
-        return view('modules.carrito.index', compact('carrito', 'total'));
+        $carrito = Carrito::paginate(10);
+        return view('modules.carrito.index', compact('carrito'));
     }
 
-    public function agregar(Request $request)
+    public function edit($id)
     {
-        $producto = Producto::findOrFail($request->id);
-
-        $this->carrito->agregarProducto($producto, $request->cantidad);
-
-        return redirect()->route('carrito.index')
-            ->with('success', 'Producto añadido al carrito');
+        $item = Carrito::findOrFail($id);
+        return view('modules.carrito.edit', compact('item'));
     }
 
-    public function actualizar(Request $request)
+    public function destroy($id)
     {
-        $this->carrito->actualizarCantidad($request->id, $request->cantidad);
-
-        return back()->with('success', 'Cantidad actualizada');
-    }
-
-    public function eliminar($id)
-    {
-        $this->carrito->eliminarProducto($id);
-
-        return back()->with('success', 'Producto eliminado');
-    }
-
-    public function vaciar()
-    {
-        $this->carrito->vaciarCarrito();
-
-        return back()->with('success', 'Carrito vacío');
+        $item = Carrito::findOrFail($id);
+        $item->delete();
+        return redirect()->route('carrito.index')->with('success', 'Producto eliminado del carrito.');
     }
 }
-
