@@ -8,6 +8,13 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Middleware\CheckUsuarioAutenticado;
+use App\Http\Controllers\DetalleVentaController;
+use App\Http\Controllers\CarritoController;
+use App\Models\Carrito;
+use App\Http\Controllers\VentaController;
+use Symfony\Component\Routing\Route as RoutingRoute;
+use App\Http\Controllers\ReporteController;
+
 
 Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
 
@@ -55,4 +62,13 @@ Route::get('/categorias/{id}/edit', [CategoriasController::class, 'edit'])->name
 Route::put('/categorias/{id}', [CategoriasController::class, 'update'])->name('categorias.update');
 Route::delete('/categorias/{id}', [CategoriasController::class, 'destroy'])->name('categorias.destroy');
 
+Route::get('/detalle-venta', [DetalleVentaController::class, 'index'])->name('detalle_venta.index');
+Route::resource('carrito', CarritoController::class);
+Route::resource('ventas', VentaController::class);
+Route::get('ventas/{id}/ticket', [VentaController::class, 'ticket'])->name('ventas.ticket');
 
+//repores
+Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+Route::get('/reportes/ultimos', [ReporteController::class, 'ultimos'])->name('reportes.ultimos');
+Route::get('/reportes/exportar-pdf', [ReporteController::class, 'exportarPdf'])
+     ->name('reportes.exportarPdf');

@@ -8,58 +8,66 @@ use Illuminate\Http\Request;
 class VentaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar listado de ventas.
      */
     public function index()
     {
-        //
+        // Trae las ventas con el usuario relacionado
+        $ventas = Venta::with('usuario')
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        return view('modules.ventas.ventas-realizadas', compact('ventas'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar detalle de una venta.
      */
-    public function create()
+    public function show($id)
     {
-        //
+        $venta = Venta::with(['usuario','detalles'])->findOrFail($id);
+        return view('ventas.show', compact('venta'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Mostrar formulario de edición.
      */
-    public function store(Request $request)
+    public function edit($id)
     {
-        //
+        $venta = Venta::findOrFail($id);
+        return view('ventas.edit', compact('venta'));
     }
 
     /**
-     * Display the specified resource.
+     * Actualizar una venta.
      */
-    public function show(Venta $venta)
+    public function update(Request $request, $id)
     {
-        //
+        $venta = Venta::findOrFail($id);
+        $venta->update($request->all());
+
+        return redirect()->route('ventas.index')->with('status', 'Venta actualizada correctamente');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Eliminar una venta.
      */
-    public function edit(Venta $venta)
+    public function destroy($id)
     {
-        //
+        $venta = Venta::findOrFail($id);
+        $venta->delete();
+
+        return redirect()->route('ventas.index')->with('status', 'Venta eliminada correctamente');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Generar ticket de una venta.
      */
-    public function update(Request $request, Venta $venta)
+    public function ticket($id)
     {
-        //
-    }
+        $venta = Venta::with(['usuario','detalles'])->findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Venta $venta)
-    {
-        //
+        // Aquí puedes devolver una vista imprimible o generar PDF
+        return view('ventas.ticket', compact('venta'));
     }
 }
