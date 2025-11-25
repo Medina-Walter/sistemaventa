@@ -3,71 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Models\Venta;
-use Illuminate\Http\Request;
+use App\Models\DetalleVenta;
+use App\Models\Producto;
+use App\Repositories\CarritoRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VentaController extends Controller
 {
-    /**
-     * Mostrar listado de ventas.
-     */
-    public function index()
-    {
-        // Trae las ventas con el usuario relacionado
-        $ventas = Venta::with('usuario')
-            ->orderByDesc('created_at')
-            ->paginate(10);
+    protected $carrito;
 
-        return view('modules.ventas.ventas-realizadas', compact('ventas'));
+    public function __construct(CarritoRepository $carrito)
+    {
+        $this->carrito = $carrito;
     }
 
-    /**
-     * Mostrar detalle de una venta.
-     */
-    public function show($id)
+    public function confirmarVenta()
     {
-        $venta = Venta::with(['usuario','detalles'])->findOrFail($id);
-        return view('ventas.show', compact('venta'));
-    }
+        $carrito = $this->carrito->obtenerCarrito();
 
-    /**
-     * Mostrar formulario de edición.
-     */
-    public function edit($id)
-    {
-        $venta = Venta::findOrFail($id);
-        return view('ventas.edit', compact('venta'));
-    }
+        if (empty($carrito)) {
+            return back()->with('error', 'El carrito está vacío.');
+        }
 
-    /**
-     * Actualizar una venta.
-     */
-    public function update(Request $request, $id)
-    {
-        $venta = Venta::findOrFail($id);
-        $venta->update($request->all());
+        DB::beginTransaction();
 
-        return redirect()->route('ventas.index')->with('status', 'Venta actualizada correctamente');
-    }
+        try {
 
-    /**
-     * Eliminar una venta.
-     */
-    public function destroy($id)
-    {
-        $venta = Venta::findOrFail($id);
-        $venta->delete();
+            // Crear venta
+            $venta = Venta::create([
+                'id_usuario'  => Auth::id(),
+                'fecha_venta' => now(),
+                'monto_total' => $this->carrito->total()
+            ]);
 
-        return redirect()->route('ventas.index')->with('status', 'Venta eliminada correctamente');
-    }
+            // Descontar stock y crear detalle
+            foreach ($carrito as $item) {
 
-    /**
-     * Generar ticket de una venta.
-     */
-    public function ticket($id)
-    {
-        $venta = Venta::with(['usuario','detalles'])->findOrFail($id);
+                $producto = Producto::findOrFail($item['id']);
 
-        // Aquí puedes devolver una vista imprimible o generar PDF
-        return view('ventas.ticket', compact('venta'));
+                if ($producto->stock < $item['cantidad']) {
+                    DB::rollBack();
+                    return back()->with('error', "Stock insuficiente para: {$producto->nombre}");
+                }
+
+                // Descontar stock
+                $producto->stock -= $item['cantidad'];
+                $producto->save();
+
+                // Crear detalle de la venta
+                DetalleVenta::create([
+                    'id_venta'       => $venta->id,
+                    'id_producto'    => $item['id'],
+                    'cantidad'       => $item['cantidad'],
+                    'precio_unitario'=> $item['precio_venta'],
+                    'sub_total'      => $item['subtotal']
+                ]);
+            }
+
+            DB::commit();
+
+            $this->carrito->vaciarCarrito();
+
+            return redirect()->route('carrito.index')
+                ->with('success', 'Venta realizada con éxito.');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 }

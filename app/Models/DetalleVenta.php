@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DetalleVenta extends Model
 {
-    use HasFactory;
+    protected $table = 'detalle_ventas';
 
     // Nombre exacto de la tabla en tu base de datos
     protected $table = 'detalle_venta';
@@ -20,7 +19,7 @@ class DetalleVenta extends Model
         'id_producto',
         'cantidad',
         'precio_unitario',
-        'sub_total',
+        'sub_total'
     ];
 
     public function venta()
