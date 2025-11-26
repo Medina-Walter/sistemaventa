@@ -59,7 +59,7 @@
                 <select name="id_categoria" class="form-select" required>
                   <option value="">Seleccionar categoría</option>
                   @foreach ($categorias as $categoria)
-                    <option value="{{ $categoria->id }}" {{ old('id_categoria') == $categoria->id ? 'selected' : '' }}>
+                    <option value="{{ $categoria->id_categoria }}" {{ old('id_categoria') == $categoria->id ? 'selected' : '' }}>
                       {{ $categoria->nombre }}
                     </option>
                   @endforeach

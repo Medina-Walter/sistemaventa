@@ -36,8 +36,8 @@
                 <td>{{ $proveedor->direccion }}</td>
                 <td>{{ $proveedor->sitio_web }}</td>
                 <td class="d-flex gap-2">
-                  <a href="{{ route('proveedores.edit', $proveedor->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                  <form method="POST" action="{{ route('proveedores.destroy', $proveedor->id) }}">
+                  <a href="{{ route('proveedores.edit', $proveedor->id_proveedor) }}" class="btn btn-sm btn-primary">Editar</a>
+                  <form method="POST" action="{{ route('proveedores.destroy', $proveedor->id_proveedor) }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar proveedor?')">Eliminar</button>

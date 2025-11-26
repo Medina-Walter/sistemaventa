@@ -11,7 +11,7 @@ class Proveedor extends Model
     use HasFactory;
     protected $table = 'proveedores';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_proveedor';
 
     public $timestamps = true;
 
