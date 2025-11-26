@@ -8,22 +8,12 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\CategoriasController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VentaController;
 use App\Http\Middleware\CheckUsuarioAutenticado;
 
 Route::middleware(CheckUsuarioAutenticado::class)->group(function () {
-
-});
-
-Route::get('/login', function () { 
-    return view('auth.login');
-})->name('login');
-
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/home', function () { return view('modules.dashboard.home');})->name('home');
-
-Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
 Route::post('/usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
 Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit'])->name('usuarios.edit');
@@ -62,5 +52,16 @@ Route::delete('/carrito/{id}', [CarritoController::class, 'eliminar'])->name('ca
 Route::delete('/carrito', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
 
 Route::post('/ventas/confirmar', [VentaController::class, 'confirmarVenta'])->name('ventas.confirmar');
+});
+
+Route::get('/login', function () { 
+    return view('auth.login');
+})->name('login');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
+
+
 
 
