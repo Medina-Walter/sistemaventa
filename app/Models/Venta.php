@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class Venta extends Model
 {
@@ -12,7 +12,7 @@ class Venta extends Model
     protected $fillable = [
         'id_usuario',
         'fecha_venta',
-        'monto_total'
+        'total_venta'
     ];
 
     public function detalles()
@@ -22,6 +22,6 @@ class Venta extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class, 'id_usuario');
+        return $this->belongsTo(Usuario::class, 'id_usuario');
     }
 }

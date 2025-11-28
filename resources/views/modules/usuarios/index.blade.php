@@ -11,12 +11,6 @@
                     <div class="card-body">
                         <h5 class="card-title">Bienvenido, {{ session('usuario_nombre') }}</h5>
 
-                        <!-- Mensajes de éxito o error -->
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul class="mb-0">
@@ -59,7 +53,7 @@
                                             <td>••••••••</td>
                                             <td>
                                                 <form method="POST"
-                                                    action="{{ route('usuarios.cambiarEstadoUsuario', $usuario->id_usuario) }}">
+                                                    action="{{ route('usuarios.cambiarEstadoUsuario', $usuario->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit"
@@ -71,11 +65,11 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center gap-2">
-                                                    <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}"
+                                                    <a href="{{ route('usuarios.edit', $usuario->id) }}"
                                                         class="btn btn-sm btn-primary">
                                                         <i class="bi bi-pencil-square"></i> Editar
                                                     </a>
-                                                    <a href="{{ route('usuarios.password.edit', $usuario->id_usuario) }}"
+                                                    <a href="{{ route('usuarios.password.edit', $usuario->id) }}"
                                                         class="btn btn-sm btn-warning">
                                                         <i class="bi bi-key-fill"></i> Cambiar contraseña
                                                     </a>

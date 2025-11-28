@@ -62,7 +62,7 @@
                                         <select name="rol" id="rol" class="form-select" required>
                                             <option value="admin" {{ old('rol') == 'admin' ? 'selected' : '' }}>
                                                 Administrador</option>
-                                            <option value="usuario" {{ old('rol') == 'usuario' ? 'selected' : '' }}>Usuario
+                                            <option value="cajero" {{ old('rol') == 'cajero' ? 'selected' : '' }}>Cajero
                                             </option>
                                         </select>
                                     </div>

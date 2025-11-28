@@ -2,27 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carrito;
+use App\Models\Producto;
+use App\Repositories\CarritoRepository;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
-    public function index()
+    protected $carritoRepo;
+
+    public function __construct(CarritoRepository $carritoRepo)
     {
-        $carrito = Carrito::paginate(10);
-        return view('modules.carrito.index', compact('carrito'));
+        $this->carritoRepo = $carritoRepo;
     }
 
-    public function edit($id)
+    public function index()
     {
-        $item = Carrito::findOrFail($id);
-        return view('modules.carrito.edit', compact('item'));
+        $carrito = $this->carritoRepo->obtenerCarrito();
+        $total = $this->carritoRepo->total();
+
+        return view('modules.carrito.index', compact('carrito', 'total'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_producto' => 'required|exists:productos,id',
+            'cantidad' => 'required|integer|min:1'
+        ]);
+
+        $producto = Producto::findOrFail($request->id_producto);
+
+        if ($request->cantidad > $producto->stock) {
+            return back()->with('error', 'No hay stock suficiente.');
+        }
+
+        $this->carritoRepo->agregarProducto($producto, $request->cantidad);
+
+        return redirect()->route('carrito.index')->with('success', 'Producto añadido al carrito.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate(['cantidad' => 'required|integer|min:1']);
+
+        $producto = Producto::findOrFail($id);
+
+        if ($request->cantidad > $producto->stock) {
+            return back()->with('error', 'La cantidad supera el stock disponible.');
+        }
+
+        $this->carritoRepo->actualizarCantidad($id, $request->cantidad);
+
+        return back()->with('success', 'Cantidad actualizada.');
     }
 
     public function destroy($id)
     {
-        $item = Carrito::findOrFail($id);
-        $item->delete();
+        $this->carritoRepo->eliminarProducto($id);
+
         return redirect()->route('carrito.index')->with('success', 'Producto eliminado del carrito.');
+    }
+
+    public function vaciar()
+    {
+        $this->carritoRepo->vaciarCarrito();
+
+        return redirect()->route('carrito.index')->with('success', 'Carrito vaciado.');
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh; background: linear-gradient(135deg, #0d6efd, #0a58ca);">
+<div class="container d-flex justify-content-center align-items-center">
     <div class="col-md-6">
         <div class="card shadow-lg border-0 rounded-3">
             <div class="card-header text-center bg-primary text-white fw-bold fs-4">

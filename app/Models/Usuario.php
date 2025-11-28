@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
     use HasFactory;
 
     protected $table = 'usuarios';
-    protected $primaryKey = 'id_usuario';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nombre',
@@ -23,18 +23,14 @@ class Usuario extends Model
         'estado',
     ];
 
-    /**
-     * Encripta la contraseña solo si no está encriptada
-     */
     public function setPasswordAttribute($value)
-{
-    if (Hash::needsRehash($value)) {
-        $this->attributes['password'] = Hash::make($value);
-    } else {
-        $this->attributes['password'] = $value;
+    {
+        if (Hash::needsRehash($value)) {
+            $this->attributes['password'] = Hash::make($value);
+        } else {
+            $this->attributes['password'] = $value;
+        }
     }
-}
-
 
     public function ventas()
     {

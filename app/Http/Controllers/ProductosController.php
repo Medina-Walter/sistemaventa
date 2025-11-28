@@ -97,7 +97,6 @@ class ProductosController extends Controller
         return view('modules.productos.edit', compact('producto', 'categorias', 'proveedores'));
     }
 
-//vaLIDA, PROCESA ACTUALIZA Y RESPONDE
     public function update(Request $request, $id)
     {
         try {
@@ -125,9 +124,7 @@ class ProductosController extends Controller
                 $datos['id_imagen'] = $imagen->id;
             }
 
-           /*llama a */  $this->productoRepository->actualizar($id, $datos); /*El controlador no interactúa con el modelo ni con Eloquent.
-
-            Solo llama a un método del repositorio (actualizar($id, $datos)), y es el repositorio el que se encarga de usar Product::find(busca por clave primearia) y update(actualiza)*/
+            $this->productoRepository->actualizar($id, $datos);
 
             return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente');
         } catch (Exception $e) {

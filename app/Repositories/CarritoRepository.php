@@ -21,6 +21,7 @@ class CarritoRepository
             $carrito[$producto->id] = [
                 'id' => $producto->id,
                 'nombre' => $producto->nombre,
+                'codigo' => $producto->codigo,
                 'precio_venta' => $producto->precio_venta,
                 'cantidad' => $cantidad,
                 'subtotal' => $producto->precio_venta * $cantidad

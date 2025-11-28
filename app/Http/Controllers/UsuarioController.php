@@ -27,7 +27,7 @@ class UsuarioController extends Controller
             'usuario' => 'required|string|max:50|unique:usuarios,usuario',
             'correo' => 'required|email|unique:usuarios,correo',
             'password' => 'required|string|min:8|confirmed',
-            'rol' => 'required|in:admin,empleado',
+            'rol' => 'required|in:admin,cajero',
         ]);
 
         Usuario::create([
@@ -65,7 +65,7 @@ class UsuarioController extends Controller
             'apellido' => 'required|string|max:100',
             'usuario' => 'required|string|max:50',
             'correo' => 'required|email',
-            'rol' => 'required|in:admin,empleado',
+            'rol' => 'required|in:admin,cajero',
         ]);
 
         $usuario = Usuario::findOrFail($id);

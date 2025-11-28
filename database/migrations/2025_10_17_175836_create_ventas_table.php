@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_usuario');
+            $table->string('estado')->default('activa');
             $table->date('fecha_venta');
-            $table->decimal('monto_total', 10, 2);
+            $table->decimal('total_venta', 10, 2);
             $table->timestamps();
             $table->foreign('id_usuario')
-    ->references('id')
-    ->on('usuarios')
-    ->onDelete('cascade');
+                ->references('id')
+                ->on('usuarios')
+                ->onDelete('cascade');
         });
     }
 

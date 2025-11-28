@@ -10,44 +10,52 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardRepository
 {
+
     public function ventasHoy()
     {
-        return Venta::whereDate('created_at', Carbon::today())->sum('monto_total');
+        // Obtener las ventas del día
+        $ventasHoy = Venta::whereDate('created_at', Carbon::today())->pluck('id');
+
+        // Sumar todas las cantidades de los detalles de esas ventas
+        return DetalleVenta::whereIn('id_venta', $ventasHoy)->sum('cantidad');
     }
 
     public function ventasMes()
     {
-        return Venta::whereMonth('created_at', Carbon::now()->month)->sum('monto_total');
+        return DetalleVenta::whereMonth('created_at', now()->month)
+            ->sum('cantidad');
     }
+
 
     public function totalVentas()
     {
-        return Venta::count();
+        return Venta::sum('total_venta');
     }
 
-    public function productosBajoStock($limite = 5)
+
+    public function bajoStock($limite = 5)
     {
         return Producto::where('stock', '<=', $limite)->get();
     }
 
     public function productoMasVendido()
     {
-        return DetalleVenta::select('id_producto', DB::raw('SUM(cantidad) as total'))
+        $detalle = DetalleVenta::select('id_producto', DB::raw('SUM(cantidad) as total'))
             ->groupBy('id_producto')
             ->orderByDesc('total')
             ->first();
+
+        if ($detalle) {
+            $producto = Producto::find($detalle->id_producto);
+            if ($producto) {
+                $producto->cantidad = $detalle->total;
+                return $producto;
+            }
+        }
+
+        return null; // Si no hay ventas
     }
 
-    public function ventasPorMes()
-    {
-        return Venta::select(
-            DB::raw('MONTH(created_at) as mes'),
-            DB::raw('SUM(monto_total) as total')
-        )
-        ->groupBy('mes')
-        ->orderBy('mes')
-        ->get();
-    }
 
     public function ultimasVentas($limite = 5)
     {

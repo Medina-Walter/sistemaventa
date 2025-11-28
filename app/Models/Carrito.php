@@ -9,8 +9,8 @@ class Carrito extends Model
 {
     use HasFactory;
 
-    protected $table = 'carrito'; // nombre exacto de la tabla
-    protected $primaryKey = 'id'; // ajusta si tu PK es distinta
+    protected $table = 'carrito';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'codigo_barra',

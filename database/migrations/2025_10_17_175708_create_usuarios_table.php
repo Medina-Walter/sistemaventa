@@ -12,12 +12,8 @@ return new class extends Migration
     public function up(): void // Usamos ': void' para mejor tipado
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            
-            // Define la clave primaria. 
-            // Si quieres que se llame 'id_usuario', usa id('id_usuario').
-            // Si quieres el nombre estándar 'id', usa solo id().
             $table->id(); 
-            $table->string('nombre', 100);    // Ajustar el tamaño es buena práctica
+            $table->string('nombre', 100);
             $table->string('apellido', 100);
             $table->string('usuario', 50)->unique(); 
             $table->string('correo', 100)->unique();

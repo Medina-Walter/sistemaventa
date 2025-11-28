@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -37,17 +39,18 @@ class AuthController extends Controller
                 ])->withInput();
             }
 
+            Auth::login($usuario);
             Session::put('usuario_id', $usuario->id);
             Session::put('usuario_nombre', $usuario->nombre . ' ' . $usuario->apellido);
-            Session::put('usuario_rol', $usuario->rol);
-            Session::put('id', $usuario->id);
-            Session::put('nombre', $usuario->nombre);
+            Session::put('rol', $usuario->rol);
 
-            return redirect('/home');
+            return redirect('/');
         }
 
-        return back()->withErrors(['usuario' => 'Credenciales incorrectas.',])->withInput();
+
+        return back()->withErrors(['usuario' => 'Credenciales incorrectas.'])->withInput();
     }
+
 
     /**
      * Cierra la sesión

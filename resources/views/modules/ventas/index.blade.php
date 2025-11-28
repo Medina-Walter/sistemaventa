@@ -1,54 +1,81 @@
 @extends('layouts.main')
-@section('titulo', 'Detalle de Venta')
+@section('titulo', 'Dashboard')
 @section('contenido')
+    <main id="main" class="main">
 
-<main id="main" class="main">
-    <section class="section">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Detalle de Venta</h5>
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="mt-3">Productos Vendidos</h2>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <thead class="table-light text-center">
-                                    <tr>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-middle text-center">
-                                    @forelse ($detalles as $detalle)
+                            <div
+                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>Ventas registradas</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover align-middle">
+                                    <thead class="bg-primary">
                                         <tr>
-                                            {{--mostrar el nombre del producto por si  hay relación con la tabla productos --}}
-                                            <td>{{ $detalle->producto->nombre ?? 'ID: '.$detalle->id_producto }}</td>
-                                            <td>{{ $detalle->cantidad }}</td>
-                                            <td>${{ number_format($detalle->precio_unitario, 2) }}</td>
-                                            <td>${{ number_format($detalle->sub_total, 2) }}</td>
+                                            <th>Total Vendido</th>
+                                            <th>Fecha de Venta</th>
+                                            <th>Usuario</th>
+                                            <th>Imprimir Ticket</th>
+                                            <th>Acciones</th>
+                                            <th>Estado</th>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4">No hay detalles de venta registrados.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($ventas as $venta)
+                                            <tr>
+                                                <td>${{ number_format($venta->total_venta, 2) }}</td>
+                                                <td>{{ $venta->created_at->format('d/m/Y H:i') }}</td>
+                                                <td>{{ $venta->usuario->usuario ?? '—' }}</td>
+                                                <td>
+                                                    <a href="{{ route('ventas.ticket', $venta->id) }}"
+                                                        class="btn btn-sm btn-primary">
+                                                        🧾 Ticket
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('ventas.show', $venta->id) }}"
+                                                            class="btn btn-sm btn-primary me-2">Ver Detalle</a>
+                                                        @if ($venta->estado === 'activa')
+                                                            <form action="{{ route('ventas.anular', $venta->id) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-warning">Anular</button>
+                                                            </form>
+                                                        @else
+                                                            <form action="{{ route('ventas.activar', $venta->id) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-success">Activar</button>
+                                                            </form>
+                                                        @endif
+
+                                                <td>
+                                                    @if ($venta->estado === 'activa')
+                                                        <span class="badge bg-success">Activa</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Anulada</span>
+                                                    @endif
+                                                </td>
+                            </div>
+                            </td>
+                            </tr>
+                            @endforeach
+                            </tbody>
                             </table>
                         </div>
-
-                        <!-- Botón Volver -->
-                        <div class="mt-3">
-                            <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                                <i class="bi bi-arrow-left-circle"></i> Volver
-                            </a>
-                        </div>
-
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</main>
+            </div>
+        </section>
+    </main>
 @endsection

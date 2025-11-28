@@ -70,17 +70,7 @@ class ReporteController extends Controller
     /**
      * Vista separada para últimos productos vendidos
      */
-    public function ultimos()
-    {
-        $ultimosVendidos = DetalleVenta::select('detalle_venta.*')
-            ->join('ventas', 'ventas.id_venta', '=', 'detalle_venta.id_venta')
-            ->orderBy('ventas.created_at', 'desc')
-            ->with(['producto:id_producto,codigo,nombre', 'venta:id_venta,created_at,total_venta'])
-            ->limit(20) // puedes ajustar el límite
-            ->get();
-
-        return view('modules.reportes.ultimos', compact('ultimosVendidos'));
-    }
+    
 
     /**
      * Exportar reportes a PDF
