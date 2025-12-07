@@ -8,65 +8,67 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="mt-3">Productos Vendidos</h2>
 
                             <div
-                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i>Ventas registradas</h5>
+                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center rounded-top mt-3">
+                                <h5 class="mb-0 fw-bold"><i class="bi bi-people-fill me-2"></i>Ventas registradas</h5>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover align-middle">
                                     <thead class="bg-primary">
                                         <tr>
-                                            <th>Total Vendido</th>
-                                            <th>Fecha de Venta</th>
-                                            <th>Usuario</th>
-                                            <th>Imprimir Ticket</th>
-                                            <th>Acciones</th>
-                                            <th>Estado</th>
+                                            <th class="text-center">ID</th>
+                                            <th class="text-center">Total Vendido</th>
+                                            <th class="text-center">Fecha de Venta</th>
+                                            <th class="text-center">Usuario</th>
+                                            <th class="text-center">Imprimir Ticket</th>
+                                            <th class="text-center">Acciones</th>
+                                            <th class="text-center">Estado</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="text-center">
                                         @foreach ($ventas as $venta)
                                             <tr>
-                                                <td>${{ number_format($venta->total_venta, 2) }}</td>
-                                                <td>{{ $venta->created_at->format('d/m/Y H:i') }}</td>
-                                                <td>{{ $venta->usuario->usuario ?? '—' }}</td>
-                                                <td>
+                                                <td class="text-center">{{ $venta->id }}</td>
+                                                <td class="text-center">${{ number_format($venta->total_venta, 2) }}</td>
+                                                <td class="text-center">{{ $venta->created_at->format('d/m/Y H:i') }}</td>
+                                                <td class="text-center">{{ $venta->usuario->usuario ?? '—' }}</td>
+                                                <td class="text-center">
                                                     <a href="{{ route('ventas.ticket', $venta->id) }}"
-                                                        class="btn btn-sm btn-primary">
+                                                        class="btn btn-sm btn-primary text-center">
                                                         🧾 Ticket
                                                     </a>
                                                 </td>
-                                                <td>
+                                                <td class="d-flex justify-content-center gap-2">
                                                     <div class="d-flex">
-                                                        <a href="{{ route('ventas.show', $venta->id) }}"
+                                                        <div class="text-center">
+                                                            <a href="{{ route('ventas.show', $venta->id) }}"
                                                             class="btn btn-sm btn-primary me-2">Ver Detalle</a>
+                                                        </div>
                                                         @if ($venta->estado === 'activa')
                                                             <form action="{{ route('ventas.anular', $venta->id) }}"
                                                                 method="POST" class="d-inline">
                                                                 @csrf
                                                                 <button type="submit"
-                                                                    class="btn btn-sm btn-warning">Anular</button>
+                                                                    class="btn btn-sm btn-warning text-center">Anular</button>
                                                             </form>
                                                         @else
                                                             <form action="{{ route('ventas.activar', $venta->id) }}"
                                                                 method="POST" class="d-inline">
                                                                 @csrf
                                                                 <button type="submit"
-                                                                    class="btn btn-sm btn-success">Activar</button>
+                                                                    class="btn btn-sm btn-success text-center">Activar</button>
                                                             </form>
                                                         @endif
 
                                                 <td>
                                                     @if ($venta->estado === 'activa')
-                                                        <span class="badge bg-success">Activa</span>
+                                                        <span class="badge bg-success text-center">Activa</span>
                                                     @else
-                                                        <span class="badge bg-danger">Anulada</span>
+                                                        <span class="badge bg-danger text-center">Anulada</span>
                                                     @endif
                                                 </td>
                             </div>
-                            </td>
                             </tr>
                             @endforeach
                             </tbody>

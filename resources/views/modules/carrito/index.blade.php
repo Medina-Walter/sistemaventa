@@ -10,9 +10,12 @@
                     <div class="card">
                         <div class="card-body">
 
-                            <h5 class="card-title">Carrito de Compras</h5>
+                            <div
+                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center border-0 rounded-top mt-3">
+                                <h5 class="mb-0 fw-bold">Carrito de Compras</h5>
+                            </div>
 
-                            <div class="table-responsive">
+                            <div>
                                 <table class="table table-hover table-bordered">
                                     <thead class="table-light text-center">
                                         <tr>
@@ -33,10 +36,15 @@
                                                 <td>${{ number_format($item['precio_venta'], 2) }}</td>
 
                                                 <td>
-                                                    <a href="{{ route('carrito.edit', $item['id']) }}"
-                                                        class="btn btn-sm btn-primary">
-                                                        <i class="bi bi-pencil-square"></i> Editar
-                                                    </a>
+                                                    <form action="{{ route('carrito.update', $item['id']) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PUT')
+    <input type="number" name="cantidad" value="{{ $item['cantidad'] }}" min="1" style="width:60px">
+    <button type="submit" class="btn btn-sm btn-primary">
+        <i class="bi bi-pencil-square"></i> Actualizar
+    </button>
+</form>
+
 
                                                     <form action="{{ route('carrito.destroy', $item['id']) }}"
                                                         method="POST" class="d-inline">

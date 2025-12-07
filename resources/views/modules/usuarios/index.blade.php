@@ -9,7 +9,6 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Bienvenido, {{ session('usuario_nombre') }}</h5>
 
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -21,8 +20,8 @@
                             </div>
                         @endif
 
-                        <div class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i> Usuarios registrados</h5>
+                        <div class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center rounded-top mt-3">
+                            <h5 class="mb-0 fw-bold"><i class="bi bi-people-fill me-2"></i> Usuarios registrados</h5>
                             <a href="{{ route('usuarios.create') }}" class="btn btn-light text-primary fw-bold">
                                 <i class="bi bi-person-plus-fill me-1"></i> Agregar Nuevo Usuario
                             </a>
@@ -37,7 +36,6 @@
                                         <th>Usuario</th>
                                         <th>Rol</th>
                                         <th>Correo</th>
-                                        <th>Contraseña</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -50,7 +48,6 @@
                                             <td>{{ $usuario->usuario }}</td>
                                             <td>{{ $usuario->rol }}</td>
                                             <td>{{ $usuario->correo }}</td>
-                                            <td>••••••••</td>
                                             <td>
                                                 <form method="POST"
                                                     action="{{ route('usuarios.cambiarEstadoUsuario', $usuario->id) }}">

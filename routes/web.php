@@ -54,7 +54,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
         Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
         Route::post('/carrito/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
-        Route::get('/carrito/{id}/edit', [CarritoController::class, 'edit'])->name('carrito.edit');
+        Route::put('/carrito/{id}/update', [CarritoController::class, 'update'])->name('carrito.update');
         Route::delete('/carrito/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
         Route::delete('/carrito/{id}', [CarritoController::class, 'destroy'])->name('carrito.destroy');
 
@@ -75,7 +75,8 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
-// Login
 Route::get('/login', fn() => view('auth.login'))->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/crear-admin', [UsuarioController::class, 'crearAdmin']);
+

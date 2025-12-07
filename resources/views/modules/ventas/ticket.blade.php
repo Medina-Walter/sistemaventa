@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Ticket de Venta #{{ $venta->id }}</title>
@@ -10,39 +11,50 @@
             margin: 0;
             padding: 0;
         }
+
         .ticket {
             width: 300px;
             margin: auto;
             padding: 10px;
             border: 1px solid #000;
         }
-        h2, h3 {
+
+        h2,
+        h3 {
             text-align: center;
             margin: 5px 0;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
-        th, td {
+
+        th,
+        td {
             text-align: left;
             padding: 3px 0;
         }
+
         th {
             border-bottom: 1px solid #000;
         }
+
         tfoot td {
             font-weight: bold;
         }
+
         .center {
             text-align: center;
         }
+
         .right {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <div class="ticket">
         <h2>Sistema de Ventas y Almacén</h2>
@@ -62,9 +74,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($venta->detalles as $detalle)
+                @foreach ($venta->detalles as $detalle)
                     <tr>
-                        <td>{{ $detalle->producto->nombre ?? 'ID: '.$detalle->id_producto }}</td>
+                        <td>{{ $detalle->producto->nombre ?? 'ID: ' . $detalle->id_producto }}</td>
                         <td class="center">{{ $detalle->cantidad }}</td>
                         <td class="right">${{ number_format($detalle->precio_unitario, 2) }}</td>
                         <td class="right">${{ number_format($detalle->sub_total, 2) }}</td>
@@ -82,4 +94,5 @@
         <p class="center">¡Gracias por su compra!</p>
     </div>
 </body>
+
 </html>

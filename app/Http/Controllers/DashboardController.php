@@ -30,10 +30,12 @@ class DashboardController extends Controller
 
     public function exportarPdf()
     {
-        $ventas = Venta::select('id','created_at','total_venta')->get();
-        $pdf = Pdf::loadView('modules.reportes.reportes_pdf', compact('ventas'));
-        return $pdf->download('reportes.pdf');
+        $ventas = Venta::with(['detalleVenta', 'usuario'])
+            ->select('id', 'created_at', 'total_venta', 'estado', 'id_usuario')
+            ->get();
+            return Pdf::loadView('modules.reportes.reportes_pdf', compact('ventas'))->stream();
     }
+
 
     public function ultimos()
     {

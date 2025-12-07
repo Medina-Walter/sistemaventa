@@ -92,4 +92,19 @@ class UsuarioController extends Controller
 
         return redirect()->route('usuarios.index')->with('success', 'Contraseña actualizada correctamente.');
     }
+
+    public function crearAdmin()
+    {
+        Usuario::create([
+            'nombre' => 'Maria',
+            'apellido' => 'Ozuna',
+            'usuario' => 'maria135',
+            'rol' => 'admin',
+            'correo' => 'admin@gmail.com',
+            'password' => Hash::make('Anudclnz135'),
+            'estado' => '1',
+        ]);
+
+        return "Administrador creado exitosamente";
+    }
 }

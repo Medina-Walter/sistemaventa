@@ -3,35 +3,34 @@
 @section('contenido')
     <main id="main" class="main">
 
-        <div class="pagetitle flex justify-between items-center">
-            <h1>Categorías Registradas</h1>
-        </div>
+
 
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+
                             <div
-                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center mt-3">
-                                <h5 class="mb-0">Categorías</h5>
-                                <a href="{{ route('categorias.create') }}"
-                                    class="btn btn-light text-primary fw-bold">Agregar Nueva Categoría</a>
+                                class="card-header bg-gradient bg-primary text-white d-flex justify-content-between align-items-center border-0 rounded-top mt-3">
+                                <h5 class="mb-0 fw-bold">Categorías Registradas</h5>
+                                <a href="{{ route('categorias.create') }}" class="btn btn-light text-primary fw-bold">Agregar
+                                    Nueva Categoría</a>
                             </div>
                             <table class="table table-bordered table-hover">
                                 <thead class="table-light">
                                     <tr>
-                                        <th>Nombre de categoría</th>
-                                        <th>Acciones</th>
+                                        <th class="text-center">Nombre de categoría</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($categorias as $categoria)
                                         <tr>
-                                            <td>{{ $categoria->nombre }}</td>
-                                            <td class="d-flex gap-2">
+                                            <td class="text-center">{{ $categoria->nombre }}</td>
+                                            <td class="d-flex justify-content-center gap-2">
                                                 <a href="{{ route('categorias.edit', $categoria->id) }}"
-                                                    class="btn btn-sm btn-primary">Editar</a>
+                                                    class="btn btn-sm btn-primary text-center">Editar</a>
                                                 <form method="POST"
                                                     action="{{ route('categorias.destroy', $categoria->id) }}">
                                                     @csrf

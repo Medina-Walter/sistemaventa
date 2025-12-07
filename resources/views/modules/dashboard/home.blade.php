@@ -3,10 +3,6 @@
 @section('contenido')
     <main id="main" class="main">
 
-        <div class="pagetitle flex justify-between items-center">
-            <h1>Dashboard</h1>
-        </div>
-
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
                 {{ session('success') }}
@@ -19,10 +15,8 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Bienvenido, {{ session('usuario_nombre') }}</h5>
-                            <!-- Título de página -->
-                            <div class="pagetitle d-flex justify-content-between align-items-center mb-4">
-                                <h1 class="fw-bold text-primary">📊 Reportes</h1>
+                            <div class="pagetitle d-flex justify-content-between align-items-center mt-3">
+                                <h1 class="fw-bold text-primary">📊Dashbboard de Reportes</h1>
                             </div>
 
                             <section class="section">
